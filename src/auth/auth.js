@@ -18,6 +18,20 @@ const auth_functions = require('./auth-functions');
 
 let router = express.Router();
 
+router.get('/success', async (req, res, next) => {
+  const { refresh_token } = req.query;
+
+  if (!refresh_token) return next(Boom.badRequest('refresh_token not provided'));
+
+  res.json({
+    refresh_token
+  });
+});
+
+router.get('/failed', async (req, res, next) => {
+  return next(Boom.badRequest('refresh_token not provided'));
+});
+
 router.post('/refresh-token', async (req, res, next) => {
 
   // validate username and password
